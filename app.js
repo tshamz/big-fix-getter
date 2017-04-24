@@ -8,6 +8,7 @@ const doSomethign = function () {
   } else {
     console.log('it\'s not Wednesday.');
   };
+  return;
 };
 
 doSomethign();
