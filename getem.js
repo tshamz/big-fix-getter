@@ -123,8 +123,8 @@ _t`;
     // setup email data with unicode symbols
     let mailOptions = {
         from: '"Pest Control" <tyler@bvaccel.com>', // sender address
-        to: 'tyler@theshamboras.com', // list of receivers
-        // to: 'delivery@bvaccel.com',
+        // to: 'tyler@theshamboras.com', // list of receivers
+        to: 'delivery@bvaccel.com',
         subject: `🐝 BVA Weekly Bug Digest for ${moment().format('MMMM Do, YYYY')} 🐞`, // Subject line
         html: emailString // plain text body
     };
