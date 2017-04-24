@@ -1,1 +1,1 @@
-web: node getem.js
+web: node app.js

@@ -1,5 +1,4 @@
 const Q = require('q');
-// const dotenv = require('dotenv').config();
 const moment = require('moment');
 const Asana = require('asana');
 const table = require('table');
@@ -18,14 +17,11 @@ let transporter = nodemailer.createTransport({
 const client = Asana.Client.create().useAccessToken('0/7de52d4b57a50d78f330438cb545f5b9');
 const projectId = '238095597876701';
 
-// const startDate = (process.env.RANGE === 'MONTH') ? moment().subtract(1, 'month').startOf('month') : moment().subtract(1, 'week').startOf('day');
-// const endDate = (process.env.RANGE === 'MONTH') ? moment().subtract(1, 'month').endOf('month') : moment();
-
-// const startDate = moment().subtract(1, 'month').startOf('month');
-// const endDate = moment().subtract(1, 'month').endOf('month');
-
 const startDate = moment().subtract(1, 'week').startOf('day');
 const endDate = moment();
+
+// const startDateMonth = moment().subtract(1, 'month').startOf('month');
+// const endDateMonth = moment().subtract(1, 'month').endOf('month');
 
 const fixedParams = {
   'opt_expand': 'assignee,completed,name,projects',
@@ -56,35 +52,22 @@ const individualTotals = function () {
       return {dev: bug.assignee.name, task: bug.name.replace(/.*(BUG|bug):/, '').trim()};
     });
     return fixedBugs;
-  }).then(function (fixedBugs) {
-    let data;
+  });
+};
 
-    data = [['Hero', 'Bug Busted']];
-    fixedBugs.forEach(function (fixedBug) {
-      data.push([fixedBug.dev, fixedBug.task])
-    });
-
-    // if (process.env.RANGE === 'MONTH') {
-    //   let individualTotals = fixedBugs.reduce(function (totals, bug) {
-    //     let dev = bug.dev;
-    //     (dev in totals) ? totals[dev]++ : totals[dev] = 1;
-    //     return totals;
-    //   }, {});
-    //   data = [['Individual', 'Bugs Fixed']];
-    //   for (var key in individualTotals) {
-    //     data.push([key, individualTotals[key]]);
-    //   };
-    //   console.log('\nBugs Fixed:');
-    //   console.log(`${startDate} - ${endDate}`);
-    // } else {
-    //   data = [['Hero', 'Bug Busted']];
-    //   fixedBugs.forEach(function (fixedBug) {
-    //     data.push([fixedBug.dev, fixedBug.task])
-    //   });
-    // }
-
-
-    return fixedBugs;
+const getMonthlyTotals = function () {
+  individualTotals().then(function (fixedBugs) {
+    let individualTotals = fixedBugs.reduce(function (totals, bug) {
+      let dev = bug.dev;
+      (dev in totals) ? totals[dev]++ : totals[dev] = 1;
+      return totals;
+    }, {});
+    data = [['Individual', 'Bugs Fixed']];
+    for (var key in individualTotals) {
+      data.push([key, individualTotals[key]]);
+    };
+    console.log('\nBugs Fixed:');
+    console.log(`${startDate} - ${endDate}`);
   });
 };
 
@@ -110,11 +93,12 @@ const teamTotals = function () {
   });
 };
 
-Q.spread([
-  individualTotals(),
-  teamTotals()
-], function (solo, team) {
-  let emailString = `<style>.table tbody tr:nth-child(odd){background-color: #eee;}</style>
+const sendEmail = function() {
+  return Q.spread([
+    individualTotals(),
+    teamTotals()
+  ], function (solo, team) {
+    let emailString = `<style>.table tbody tr:nth-child(odd){background-color: #eee;}</style>
 <h2 style="font-size: 34px;">What up yall!! 🤠</h2>
 This is but one of many weekly emails in an ongoing series where we'll take a look back at the previous week and talk about bugs and all things bug related. Grab your flyswatters and come join me!
 <br><br>
@@ -136,21 +120,27 @@ Until then,
 <br>
 _t`;
 
-  // setup email data with unicode symbols
-  let mailOptions = {
-      from: '"Pest Control" <tyler@bvaccel.com>', // sender address
-      to: 'tyler@theshamboras.com', // list of receivers
-      // to: 'delivery@bvaccel.com',
-      subject: `🐝 BVA Weekly Bug Digest for ${moment().format('MMMM Do, YYYY')} 🐞`, // Subject line
-      html: emailString // plain text body
-  };
+    // setup email data with unicode symbols
+    let mailOptions = {
+        from: '"Pest Control" <tyler@bvaccel.com>', // sender address
+        // to: 'tyler@theshamboras.com', // list of receivers
+        to: 'delivery@bvaccel.com',
+        subject: `🐝 BVA Weekly Bug Digest for ${moment().format('MMMM Do, YYYY')} 🐞`, // Subject line
+        html: emailString // plain text body
+    };
 
-  // send mail with defined transport object
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      return console.log(error);
-    }
-    console.log('Message %s sent: %s', info.messageId, info.response);
+    // send mail with defined transport object
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return console.log(error);
+      }
+      console.log('Message %s sent: %s', info.messageId, info.response);
+    });
+
   });
+};
 
-});
+module.exports = {
+  sendEmail: sendEmail,
+  getMonthlyTotals: getMonthlyTotals
+};
