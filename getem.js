@@ -99,11 +99,11 @@ const sendEmail = function() {
     teamTotals()
   ], function (solo, team) {
     let emailString = `<style>.table tbody tr:nth-child(odd){background-color: #eee;}</style>
-<h2 style="font-size: 34px;">What up yall!! 🤠</h2>
-This is but one of many weekly emails in an ongoing series where we'll take a look back at the previous week and talk about bugs and all things bug related. Grab your flyswatters and come join me!
+<h2 style="font-size: 34px;">What up everyone!! 🤠</h2>
+This is yet another email in our ongoing series where we take a look back at the previous week and talk about bugs and all things bug related. Grab your flyswatters and come join me!
 <br><br>
 <h2 style="font-size: 34px;">🇺🇸Heroes in the War on Bugs 🇺🇸</h2>
-In this section, we celebrate the heroes who selflessly sacrificed themselves (and their billable time) this week in the pursuit of eradicating bugs from our sites and our communities.
+In this section, we look back on the past week and celebrate the heroes who selflessly sacrificed themselves (and their billable time) in the pursuit of eradicating bugs from our sites and our communities.
 <br><br>
 ${tabular.html(solo, {classes: {table:"table"}})}
 <br><br>
@@ -116,7 +116,7 @@ ${tabular.html(team, {classes: {table:"table"}})}
 <br><br>
 Thanks for joining me for this installment in our series on bugs. Stay turned for next week when we talk about bugs...again!
 <br><br>
-Until then,
+Until then, stay sexy yall.
 <br>
 _t`;
 
