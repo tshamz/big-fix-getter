@@ -20,9 +20,6 @@ const projectId = '238095597876701';
 const startDate = moment().subtract(1, 'week').startOf('day');
 const endDate = moment();
 
-// const startDateMonth = moment().subtract(1, 'month').startOf('month');
-// const endDateMonth = moment().subtract(1, 'month').endOf('month');
-
 const fixedParams = {
   'opt_expand': 'assignee,completed,name,projects',
   'limit': 100,
@@ -71,7 +68,6 @@ const getMonthlyTotals = function () {
   });
 };
 
-
 const teamTotals = function () {
   return client.tasks.findByProject(projectId, totalParams, {}).then(function (collection) {
     let teamTotals = collection.data.filter(function (bug) {
@@ -99,7 +95,7 @@ const sendEmail = function() {
     teamTotals()
   ], function (solo, team) {
     let emailString = `<style>.table tbody tr:nth-child(odd){background-color: #eee;}</style>
-<h2 style="font-size: 34px;">What up everyone!! 🤠</h2>
+<h2 style="font-size: 34px;">Howdy Y'all!! 🤠</h2>
 This is yet another email in our ongoing series where we take a look back at the previous week and talk about bugs and all things bug related. Grab your flyswatters and come join me!
 <br><br>
 <h2 style="font-size: 34px;">🇺🇸Heroes in the War on Bugs 🇺🇸</h2>
