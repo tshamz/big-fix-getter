@@ -103,7 +103,7 @@ In this section, we look back on the past week and celebrate the heroes who self
 <br><br>
 ${tabular.html(solo, {classes: {table:"table"}})}
 <br><br>
-<h2 style="font-size: 34px;">🐌 Bugs That Were CREATED. 🐛</h2>
+<h2 style="font-size: 34px;">🐜Bugs That Were CREATED. 🐛</h2>
 In this section, we take a look at the total number of bugs that were released into the wild (a.k.a. created and then subsequently reported) this week and take a moment to reflect and draw whatever meaningful conclusions we can.
 <br><br>
 ${tabular.html(team, {classes: {table:"table"}})}
