@@ -95,15 +95,15 @@ const sendEmail = function() {
     teamTotals()
   ], function (solo, team) {
     let emailString = `<style>.table tbody tr:nth-child(odd){background-color: #eee;}</style>
-<h2 style="font-size: 34px;">Howdy Y'all!! 🤠</h2>
+<h2 style="font-size: 34px;">🤠 Howdy Y'all!! 🤠</h2>
 This is yet another email in our ongoing series where we take a look back at the previous week and talk about bugs and all things bug related. Grab your flyswatters and come join me!
 <br><br>
-<h2 style="font-size: 34px;">🇺🇸Heroes in the War on Bugs 🇺🇸</h2>
+<h2 style="font-size: 34px;"><u>🇺🇸 Heroes in the War on Bugs 🇺🇸</u></h2>
 In this section, we look back on the past week and celebrate the heroes who selflessly sacrificed themselves (and their billable time) in the pursuit of eradicating bugs from our sites and our communities.
 <br><br>
 ${tabular.html(solo, {classes: {table:"table"}})}
 <br><br>
-<h2 style="font-size: 34px;">🐜Bugs That Were CREATED. 🐛</h2>
+<h2 style="font-size: 34px;"><u>🐜 Bugs That Were CREATED. 🐛</u></h2>
 In this section, we take a look at the total number of bugs that were released into the wild (a.k.a. created and then subsequently reported) this week and take a moment to reflect and draw whatever meaningful conclusions we can.
 <br><br>
 ${tabular.html(team, {classes: {table:"table"}})}
@@ -119,8 +119,8 @@ _t`;
     // setup email data with unicode symbols
     let mailOptions = {
         from: '"Pest Control" <tyler@bvaccel.com>', // sender address
-        // to: 'tyler@theshamboras.com', // list of receivers
         to: 'delivery@bvaccel.com',
+        cc: 'tyler@bvaccel.com',
         subject: `🐝 BVA Weekly Bug Digest for ${moment().format('MMMM Do, YYYY')} 🐞`, // Subject line
         html: emailString // plain text body
     };
