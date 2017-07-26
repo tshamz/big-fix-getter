@@ -1,7 +1,6 @@
 const Q = require('q');
 const moment = require('moment');
 const Asana = require('asana');
-// const table = require('table');
 const Table = require('cli-table');
 const tabular = require('tabular-json');
 const nodemailer = require('nodemailer');
@@ -11,6 +10,9 @@ const projectId = '238095597876701';
 
 const startDate = moment().subtract(1, 'month').startOf('month');
 const endDate = moment().subtract(1, 'month').endOf('month');
+
+// const startDate = moment().subtract(0, 'month').startOf('month');
+// const endDate = moment().subtract(0, 'month').endOf('month');
 
 const fixedParams = {
   'opt_expand': 'assignee,completed,name,projects',
