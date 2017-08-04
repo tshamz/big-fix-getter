@@ -90,7 +90,7 @@ const teamTotals = function () {
 };
 
 const createTable = (data, heading) => {
-  const tableStyle = 'style="border-collapse: collapse; border: solid #e0e0dc; border-width: 1px 0 0 1px;"'
+  const tableStyle = 'style="border-collapse: collapse; border: solid #e0e0dc; border-width: 1px 0 0 1px; width: 100%;"'
   const headCellStyle = 'style="border: solid #e0e0dc; border-width: 0 1px 1px 0; padding: 6px 8px; text-align: left;background: rgba(212,221,228,.5);"'
   const cellStyle = 'style="border: solid #e0e0dc; border-width: 0 1px 1px 0; padding: 6px 8px; text-align: left;"'
   const tableHead = `<thead><tr><th ${headCellStyle}>${heading[0]}</th><th ${headCellStyle}>${heading[1]}</th></tr></thead>`;
@@ -109,6 +109,7 @@ const sendEmail = function() {
     teamTotals()
   ], function (solo, team) {
     let emailString = `<style>.table tbody tr:nth-child(odd){background-color: #eee;}</style>
+<div style="width: 600px; margin: 0 auto;">
 <h2 style="font-size: 34px;">What up Y'all!</h2>
 This is yet another email in our ongoing series where we take a look back at the previous week and talk about bugs and all things bug related. Grab your flyswatters and come join me!
 <br><br>
@@ -128,7 +129,8 @@ Thanks for joining me for this installment in our series on bugs. Stay turned fo
 <br><br>
 Until then, stay sexy yall.
 <br>
-_t`;
+_t
+</div>`;
 
     // setup email data with unicode symbols
     let mailOptions = {
