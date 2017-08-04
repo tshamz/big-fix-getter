@@ -46,7 +46,7 @@ const individualTotals = function () {
     }).filter(function (bug) {
       return bug.assignee !== null;
     }).map(function (bug) {
-      return {dev: bug.assignee.name, task: bug.name.replace(/.*(BUG|bug):/, '').trim()};
+      return {name: bug.assignee.name, bug: bug.name.replace(/.*(BUG|bug):/, '').trim()};
     });
     return fixedBugs;
   });
@@ -83,10 +83,24 @@ const teamTotals = function () {
     }, {});
     let data = [];
     for (var key in teamTotals) {
-      data.push({team: key, 'bugs released': teamTotals[key]});
+      data.push({name: key, 'bug': teamTotals[key]});
     };
     return data;
   });
+};
+
+const createTable = (data, heading) => {
+  const tableStyle = 'style="border-collapse: collapse; border: solid #e0e0dc; border-width: 1px 0 0 1px;"'
+  const headCellStyle = 'style="border: solid #e0e0dc; border-width: 0 1px 1px 0; padding: 6px 8px; text-align: left;background: rgba(212,221,228,.5);"'
+  const cellStyle = 'style="border: solid #e0e0dc; border-width: 0 1px 1px 0; padding: 6px 8px; text-align: left;"'
+  const tableHead = `<thead><tr><th ${headCellStyle}>${heading[0]}</th><th ${headCellStyle}>${heading[1]}</th></tr></thead>`;
+
+  const tableBody = data.reduce((string, item) => {
+    const name = `<td ${cellStyle}>${item.name}</td>`;
+    const bug = `<td ${cellStyle}>${item.bug}</td>`;
+    return `${string}<tr>${name}${bug}</tr>`;
+  }, '');
+  return `<table ${tableStyle}>${tableHead}<tbody>${tableBody}</tbody></table>`;
 };
 
 const sendEmail = function() {
@@ -95,18 +109,18 @@ const sendEmail = function() {
     teamTotals()
   ], function (solo, team) {
     let emailString = `<style>.table tbody tr:nth-child(odd){background-color: #eee;}</style>
-<h2 style="font-size: 34px;">🤠 Howdy Y'all!! 🤠</h2>
+<h2 style="font-size: 34px;">What up Y'all!</h2>
 This is yet another email in our ongoing series where we take a look back at the previous week and talk about bugs and all things bug related. Grab your flyswatters and come join me!
 <br><br>
 <h2 style="font-size: 34px;"><u>🇺🇸 Heroes in the War on Bugs 🇺🇸</u></h2>
 In this section, we look back on the past week and celebrate the heroes who selflessly sacrificed themselves (and their billable time) in the pursuit of eradicating bugs from our sites and our communities.
 <br><br>
-${tabular.html(solo, {classes: {table:"table"}})}
+${createTable(solo, ['Developer', 'Bug'])}
 <br><br>
-<h2 style="font-size: 34px;"><u>🐜 Bugs That Were CREATED. 🐛</u></h2>
+<h2 style="font-size: 34px;"><u>Bugs That Were CREATED.</u></h2>
 In this section, we take a look at the total number of bugs that were released into the wild (a.k.a. created and then subsequently reported) this week and take a moment to reflect and draw whatever meaningful conclusions we can.
 <br><br>
-${tabular.html(team, {classes: {table:"table"}})}
+${createTable(team, ['Team', 'Bugs Released'])}
 <br><br>
 ---
 <br><br>
@@ -118,11 +132,11 @@ _t`;
 
     // setup email data with unicode symbols
     let mailOptions = {
-        from: '"Pest Control" <tyler@bvaccel.com>', // sender address
-        to: 'delivery@bvaccel.com',
-        cc: 'tyler@bvaccel.com',
-        subject: `🐝 BVA Weekly Bug Digest for ${moment().format('MMMM Do, YYYY')} 🐞`, // Subject line
-        html: emailString // plain text body
+      from: '"Pest Control" <tyler@bvaccel.com>', // sender address
+      to: 'delivery@bvaccel.com',
+      cc: 'tyler@bvaccel.com',
+      subject: `🐝 BVA Weekly Bug Digest for ${moment().format('MMMM Do, YYYY')}`, // Subject line
+      html: emailString
     };
 
     // send mail with defined transport object
