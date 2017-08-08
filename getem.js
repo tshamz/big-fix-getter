@@ -136,7 +136,7 @@ _t
     let mailOptions = {
       from: '"Pest Control" <tyler@bvaccel.com>', // sender address
       to: 'delivery@bvaccel.com',
-      cc: 'tyler@bvaccel.com',
+      cc: 'tyler@bvaccel.com, annie@bvaccel.com',
       subject: `🐝 BVA Weekly Bug Digest for ${moment().format('MMMM Do, YYYY')}`, // Subject line
       html: emailString
     };
