@@ -6,13 +6,19 @@ const tabular = require('tabular-json');
 const nodemailer = require('nodemailer');
 
 // create reusable transporter object using the default SMTP transport
-let transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: 'tyler@bvaccel.com',
         pass: 'aiug8330'
     }
 });
+
+const styles = {
+  ul: 'style="font-size: 18px;font-family: Verdana,Geneva,sans-serif;line-height: 1.5;color: #4e4e4e;padding-left: 24px"',
+  h2: 'style="font-size: 34px;margin-bottom: 0;"',
+  p: 'style="font-size: 18px;font-family: Verdana,Geneva,sans-serif;line-height: 1.5;color: #4e4e4e;"'
+};
 
 const client = Asana.Client.create().useAccessToken('0/7de52d4b57a50d78f330438cb545f5b9');
 const projectId = '238095597876701';
@@ -108,28 +114,19 @@ const sendEmail = function() {
     individualTotals(),
     teamTotals()
   ], function (solo, team) {
-    let emailString = `<style>.table tbody tr:nth-child(odd){background-color: #eee;}</style>
-<div style="width: 600px; margin: 0 auto;">
-<h2 style="font-size: 34px;">What up Y'all!</h2>
-This is yet another email in our ongoing series where we take a look back at the previous week and talk about bugs and all things bug related. Grab your flyswatters and come join me!
-<br><br>
-<h2 style="font-size: 34px;"><u>🇺🇸 Heroes in the War on Bugs 🇺🇸</u></h2>
-In this section, we look back on the past week and celebrate the heroes who selflessly sacrificed themselves (and their billable time) in the pursuit of eradicating bugs from our sites and our communities.
-<br><br>
-${createTable(solo, ['Developer', 'Bug'])}
-<br><br>
-<h2 style="font-size: 34px;"><u>Bugs That Were CREATED.</u></h2>
-In this section, we take a look at the total number of bugs that were released into the wild (a.k.a. created and then subsequently reported) this week and take a moment to reflect and draw whatever meaningful conclusions we can.
-<br><br>
-${createTable(team, ['Team', 'Bugs Released'])}
-<br><br>
----
-<br><br>
-Thanks for joining me for this installment in our series on bugs. Stay turned for next week when we talk about bugs...again!
-<br><br>
-Until then, stay sexy yall.
-<br>
-_t
+    let emailString = `<div style="width: 550px; margin: 0 auto;">
+  <p ${styles.p}><strong>What up Y'all!</strong> This is yet another email in our ongoing series where we take a look back at the previous week and talk about bugs and all things bug related. Grab your flyswatters and come join me!</p>
+  <h2 ${styles.h2}>🇺🇸 Heroes in the War on Bugs 🇺🇸</h2>
+  <hr>
+  <p ${styles.p}>In this section, we look back on the past week and celebrate the heroes who selflessly sacrificed themselves (and their billable time) in the pursuit of eradicating bugs from our sites and our communities.</p>
+  ${createTable(solo, ['Developer', 'Bug'])}
+  <h2 ${styles.h2}>Bugs That Were CREATED.</h2>
+  <hr>
+  <p ${styles.p}>In this section, we take a look at the total number of bugs that were released into the wild (a.k.a. created and then subsequently reported) this week and take a moment to reflect and draw whatever meaningful conclusions we can.</p>
+  ${createTable(team, ['Team', 'Bugs Released'])}
+  <p ${styles.p}>Thanks for joining me for this installment in our series on bugs. Stay turned for next week when we talk about bugs...again!</p>
+  <p ${styles.p}>Until then, stay sexy yall.</p>
+  <p ${styles.p}>- <a href="https://github.com/tshamz">@tshamz</a></p>
 </div>`;
 
     // setup email data with unicode symbols
