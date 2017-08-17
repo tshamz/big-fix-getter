@@ -134,7 +134,7 @@ const sendEmail = function() {
       from: '"Pest Control" <tyler@bvaccel.com>', // sender address
       to: 'delivery@bvaccel.com',
       cc: 'tyler@bvaccel.com, annie@bvaccel.com',
-      subject: `🐝 BVA Weekly Bug Digest for ${moment().format('MMMM Do, YYYY')}`, // Subject line
+      subject: `🐝 BVA Weekly Bug Digest™ for ${moment().format('MMMM Do, YYYY')}`, // Subject line
       html: emailString
     };
 
