@@ -116,11 +116,11 @@ const sendEmail = function() {
   ], function (solo, team) {
     let emailString = `<div style="width: 550px; margin: 0 auto;">
   <p ${styles.p}><strong>What up Y'all!</strong> This is yet another email in our ongoing series where we take a look back at the previous week and talk about bugs and all things bug related. Grab your flyswatters and come join me!</p>
-  <h2 ${styles.h2}>🇺🇸 Heroes in the War on Bugs 🇺🇸</h2>
+  <h2 ${styles.h2}>🇺🇸 Heroes in the War on Bugs</h2>
   <hr>
   <p ${styles.p}>In this section, we look back on the past week and celebrate the heroes who selflessly sacrificed themselves (and their billable time) in the pursuit of eradicating bugs from our sites and our communities.</p>
   ${createTable(solo, ['Developer', 'Bug'])}
-  <h2 ${styles.h2}>Bugs That Were CREATED.</h2>
+  <h2 ${styles.h2}>🐛 Bugs That Were CREATED.</h2>
   <hr>
   <p ${styles.p}>In this section, we take a look at the total number of bugs that were released into the wild (a.k.a. created and then subsequently reported) this week and take a moment to reflect and draw whatever meaningful conclusions we can.</p>
   ${createTable(team, ['Team', 'Bugs Released'])}
