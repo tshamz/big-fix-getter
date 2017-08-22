@@ -17,7 +17,8 @@ const transporter = nodemailer.createTransport({
 const styles = {
   ul: 'style="font-size: 18px;font-family: Verdana,Geneva,sans-serif;line-height: 1.5;color: #4e4e4e;padding-left: 24px"',
   h2: 'style="font-size: 34px;margin-bottom: 0;"',
-  p: 'style="font-size: 18px;font-family: Verdana,Geneva,sans-serif;line-height: 1.5;color: #4e4e4e;"'
+  p: 'style="font-size: 18px;font-family: Verdana,Geneva,sans-serif;line-height: 1.5;color: #4e4e4e;"',
+  pcenter: 'style="font-size: 18px;font-family: Verdana,Geneva,sans-serif;line-height: 1.5;color: #4e4e4e; text-align: center;"'
 };
 
 const client = Asana.Client.create().useAccessToken('0/7de52d4b57a50d78f330438cb545f5b9');
@@ -114,8 +115,11 @@ const sendEmail = function() {
     individualTotals(),
     teamTotals()
   ], function (solo, team) {
-    let emailString = `<div style="width: 550px; margin: 0 auto;">
-  <p ${styles.p}><strong>What up Y'all!</strong> This is yet another email in our ongoing series where we take a look back at the previous week and talk about bugs and all things bug related. Grab your flyswatters and come join me!</p>
+    let emailString = `
+<div style="width: 550px; margin: 0 auto;">
+  <img style="width: 100%" src="https://www.tylershambora.com/images/bug-report.jpg">
+  <p ${styles.pcenter}><sup><em>Shout out to cwall for the dope new banner!</em></sup></p>
+  <p ${styles.p}><strong>What up y'all!</strong> This is yet another email in our ongoing series where we take a look back at the previous week and talk about bugs and all things bug related. Grab your flyswatters and come join me!</p>
   <h2 ${styles.h2}>🇺🇸 Heroes in the War on Bugs</h2>
   <hr>
   <p ${styles.p}>In this section, we look back on the past week and celebrate the heroes who selflessly sacrificed themselves (and their billable time) in the pursuit of eradicating bugs from our sites and our communities.</p>
@@ -148,6 +152,8 @@ const sendEmail = function() {
 
   });
 };
+
+sendEmail();
 
 module.exports = {
   sendEmail: sendEmail,
