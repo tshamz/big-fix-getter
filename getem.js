@@ -149,11 +149,8 @@ const sendEmail = function() {
       }
       console.log('Message %s sent: %s', info.messageId, info.response);
     });
-
   });
 };
-
-sendEmail();
 
 module.exports = {
   sendEmail: sendEmail,
