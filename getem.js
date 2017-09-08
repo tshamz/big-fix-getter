@@ -118,7 +118,6 @@ const sendEmail = function() {
     let emailString = `
 <div style="width: 550px; margin: 0 auto;">
   <img style="width: 100%" src="https://www.tylershambora.com/images/bug-report.jpg">
-  <p ${styles.pcenter}><sup><em>Shout out to cwall for the dope new banner!</em></sup></p>
   <p ${styles.p}><strong>What up y'all!</strong> This is yet another email in our ongoing series where we take a look back at the previous week and talk about bugs and all things bug related. Grab your flyswatters and come join me!</p>
   <h2 ${styles.h2}>🇺🇸 Heroes in the War on Bugs</h2>
   <hr>
